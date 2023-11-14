@@ -10,9 +10,14 @@ const controller = require("./reservations.controller");
 router
     .route("/new")
     .post(controller.create)
-    .put(controller.update)
-    .delete(controller.delete)
     .all(methodNotAllowed);
+
+router
+    .route("/:reservationId")
+    .get(controller.read)
+    .put(controller.update)
+    .delete(controller.delete);
+
 
 router
     .route("/")
