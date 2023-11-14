@@ -1,5 +1,6 @@
 import React from "react";
 import ReservationForm from "./ReservationForm";
+import { createReservation } from "../utils/api";
 
 function NewReservation(){
 
@@ -7,7 +8,7 @@ function NewReservation(){
     <div>
         {/* calls the form with blank fields and then uses the createReservation API call on submit */}
         <ReservationForm 
-            onSubmit="*"
+            onSubmit={createReservation}
             submitButtonText="Submit"
              initialFormData={ {
             first_name: '',

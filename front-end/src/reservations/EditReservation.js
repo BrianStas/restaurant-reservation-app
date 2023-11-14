@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom";
 import ReservationForm from "./reservationForm";
+import { updateReservation } from "../utils/api";
 
 function EditReservation(){
 // pulls reservation ID from params and uses it for the reservation being edited
@@ -20,7 +21,7 @@ function EditReservation(){
         and the correct submit text with the formData filled out with the deck info */}
         {reservation.id &&
         <ReservationForm 
-            onSubmit="THIS SHOULD BE THE API CALL"
+            onSubmit={updateReservation}
             submitButtonText="Save"
             initialFormData={reservation}/>
         }

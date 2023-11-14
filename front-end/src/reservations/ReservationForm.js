@@ -18,47 +18,48 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
         event.preventDefault();
         onSubmit(formData)
         .then(data =>
-            history.push(`#`))
+            history.push(`/`))
         }
 /* returns form for the following fields: 
 first name, last name, mobile number, reservation time, and reservation date.
 Will be called for the new reservation and the reservation edits.*/
     return (
-    <div class="w-100">
+    <div className="w-100">
         
         <form onSubmit={handleSubmit}>
-            <div class="form-group">
+            <div className="form-group">
             <label htmlFor="first_name">
                 First Name
             </label>
             <input 
                 type="text" 
-                class="form-control" 
+                className="form-control" 
                 id="first_name" 
                 name="first_name" 
                 onChange={handleInput}
                 value={formData.firstName}
                 placeholder="First Name" />
             </div>
-            <div class="form-group">
+            <div className="form-group">
             <label htmlFor="last_name">
                 Last Name
             </label>
             <input 
                 type="text" 
-                class="form-control" 
+                className="form-control" 
                 id="last_name" 
                 name="last_name" 
                 onChange={handleInput}
                 value={formData.lastName}
                 placeholder="Last Name" />
             </div>
-            <div class="form-group">
+            <div className="form-group">
             <label htmlFor="mobile_number">
                 Mobile Number
             </label>
             <input 
                 type="tel" 
+                className="form-control"
                 id="mobile_number"
                 name="mobile_number"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
@@ -72,6 +73,7 @@ Will be called for the new reservation and the reservation edits.*/
             </label>
             <input 
                 type="date" 
+                className="form-control"
                 id="reservation_date" 
                 name="reservation_date" 
                 value={formData.reservationDate} 
@@ -86,6 +88,7 @@ Will be called for the new reservation and the reservation edits.*/
             </label>
             <input 
                 type="time" 
+                className="form-control"
                 id="reservation_time" 
                 name="reservation_time" 
                 min="05:00" 
@@ -95,16 +98,17 @@ Will be called for the new reservation and the reservation edits.*/
                 required />
             </div>
             <div>
-            <label for="party_size">
+            <label for="people">
                 Party Size
             </label>
             <input 
                 type="number" 
-                id="party_size" 
-                name="party_size" 
+                className="form-control"
+                id="people" 
+                name="people" 
                 min="1"
                 onChange={handleInput}
-                value={formData.partySize}
+                value={formData.people}
                 required  />
             </div>
             <button type="submit">{submitButtonText}</button>
