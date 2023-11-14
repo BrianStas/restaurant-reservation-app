@@ -58,38 +58,54 @@ Will be called for the new reservation and the reservation edits.*/
                 Mobile Number
             </label>
             <input 
-            type="tel" 
-            id="mobile_number"
-            name="mobile_number"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
-            onChange={handleInput}
-            value={formData.mobileNumber}
-            required />
+                type="tel" 
+                id="mobile_number"
+                name="mobile_number"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+                onChange={handleInput}
+                value={formData.mobileNumber}
+                required />
             </div>
             <div>
             <label for="reservation_date">
                 Date of Reservation
             </label>
             <input 
-            type="date" 
-            id="reservation_date" 
-            name="reservation_date" 
-            value={formData.reservationDate} 
-            min="2024-01-01" 
-            max="2024-12-31"
-            required />
+                type="date" 
+                id="reservation_date" 
+                name="reservation_date" 
+                value={formData.reservationDate} 
+                min="2024-01-01" 
+                max="2024-12-31"
+                onChange={handleInput}
+                required />
             </div>
             <div>
             <label for="reservation_time">
                 Reservation Time
             </label>
             <input 
-            type="time" 
-            id="reservation_time" 
-            name="reservation_time" 
-            min="05:00" 
-            max="22:00" 
-            required />
+                type="time" 
+                id="reservation_time" 
+                name="reservation_time" 
+                min="05:00" 
+                max="22:00"
+                onChange={handleInput}
+                value={formData.reservationTime} 
+                required />
+            </div>
+            <div>
+            <label for="party_size">
+                Party Size
+            </label>
+            <input 
+                type="number" 
+                id="party_size" 
+                name="party_size" 
+                min="1"
+                onChange={handleInput}
+                value={formData.partySize}
+                required  />
             </div>
             <button type="submit">{submitButtonText}</button>
         </form>
