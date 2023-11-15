@@ -37,7 +37,7 @@ Will be called for the new reservation and the reservation edits.*/
                 id="first_name" 
                 name="first_name" 
                 onChange={handleInput}
-                value={formData.firstName}
+                value={formData.first_name}
                 placeholder="First Name" />
             </div>
             <div className="form-group">
@@ -50,7 +50,7 @@ Will be called for the new reservation and the reservation edits.*/
                 id="last_name" 
                 name="last_name" 
                 onChange={handleInput}
-                value={formData.lastName}
+                value={formData.last_name}
                 placeholder="Last Name" />
             </div>
             <div className="form-group">
@@ -64,7 +64,7 @@ Will be called for the new reservation and the reservation edits.*/
                 name="mobile_number"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
                 onChange={handleInput}
-                value={formData.mobileNumber}
+                value={formData.mobile_number}
                 required />
             </div>
             <div className="form-group">
@@ -76,8 +76,8 @@ Will be called for the new reservation and the reservation edits.*/
                 className="form-control"
                 id="reservation_date" 
                 name="reservation_date" 
-                value={formData.reservationDate} 
-                min="2024-01-01" 
+                value={formData.reservation_date} 
+                min="2023-11-01" 
                 max="2024-12-31"
                 onChange={handleInput}
                 required />
@@ -94,7 +94,7 @@ Will be called for the new reservation and the reservation edits.*/
                 min="05:00" 
                 max="22:00"
                 onChange={handleInput}
-                value={formData.reservationTime} 
+                value={formData.reservation_time} 
                 required />
             </div>
             <div className="form-group">
@@ -109,6 +109,7 @@ Will be called for the new reservation and the reservation edits.*/
                 min="1"
                 onChange={handleInput}
                 value={formData.people}
+                placeholder="1"
                 required  />
             </div>
             <button type="submit">{submitButtonText}</button>

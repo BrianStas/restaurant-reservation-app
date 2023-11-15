@@ -4,6 +4,12 @@ function list(){
     return knex("reservations").select("*");
 }
 
+function filteredList(date){
+  return knex("reservations")
+    .select("*")
+    .where({reservation_date: date})
+}
+
 function create(reservation){
   console.log("calling create service");
     return knex("reservations")
@@ -31,6 +37,7 @@ function destroy(reservation_id) {
 
   module.exports = {
     list,
+    filteredList,
     create,
     read,
     update,

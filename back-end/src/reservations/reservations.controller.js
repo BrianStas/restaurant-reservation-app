@@ -2,8 +2,16 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const reservationsService = require("./reservations.service");
 
 async function list(req, res) {
+  const {date} = req.query;
+  console.log(date);
+  if(date){
+    const data = await reservationsService.filteredList(date);
+    res.json({data});
+
+  }else{
   const data = await reservationsService.list();
   res.json({ data });
+  }
 }
 
 async function create(req, res) {
