@@ -5,6 +5,7 @@ function list(){
 }
 
 function create(reservation){
+  console.log("calling create service");
     return knex("reservations")
         .insert(reservation)
         .returning("*")

@@ -67,7 +67,7 @@ Will be called for the new reservation and the reservation edits.*/
                 value={formData.mobileNumber}
                 required />
             </div>
-            <div>
+            <div className="form-group">
             <label for="reservation_date">
                 Date of Reservation
             </label>
@@ -82,7 +82,7 @@ Will be called for the new reservation and the reservation edits.*/
                 onChange={handleInput}
                 required />
             </div>
-            <div>
+            <div className="form-group">
             <label for="reservation_time">
                 Reservation Time
             </label>
@@ -97,7 +97,7 @@ Will be called for the new reservation and the reservation edits.*/
                 value={formData.reservationTime} 
                 required />
             </div>
-            <div>
+            <div className="form-group">
             <label for="people">
                 Party Size
             </label>

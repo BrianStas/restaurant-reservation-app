@@ -7,8 +7,9 @@ async function list(req, res) {
 }
 
 async function create(req, res) {
-  console.log("made it to back end!");
-  const data = await reservationsService.create(req.body.data);
+  console.log("made it to back end! Data is: ", req.body);
+  const data = await reservationsService.create(req.body);
+  console.log("data returns: ", data);
   res.status(201).json({ data });
 }
 
