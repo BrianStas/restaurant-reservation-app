@@ -10,13 +10,6 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
     const [isFuture, setIsFuture] = useState(false);
     const [isTuesday, setIsTuesday] = useState(false);
 // tracks the input as a user types to then use for submit
-    // function handleInput(event){
-    //     setFormData({
-    //         ...formData,
-    //         [event.target.name]: event.target.value
-    //     })
-    //     console.log("formData: ", formData);
-    // }
 
     function handleInput(event){
         if(event.target.name === "people"){
@@ -29,7 +22,6 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
             ...formData,
             [event.target.name]: event.target.value
         })
-        console.log("formData: ", formData);
         }
     }
 
@@ -47,7 +39,6 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
 function handleSubmit(event){
     event.preventDefault();
     if(isFuture && !isTuesday){
-    console.log("line 35 formData: ", formData);
     onSubmit(formData)
     .then(data =>
         history.push(`/`))
