@@ -2,7 +2,7 @@ import React from "react";
 //TODO: needs call to api to handle changes
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
-import ReservationForm from "./ReservationForm";
+import ReservationForm from "./reservationForm";
 import { readReservation, updateReservation } from "../utils/api";
 
 function EditReservation(){

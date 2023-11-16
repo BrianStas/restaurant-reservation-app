@@ -8,6 +8,7 @@ function filteredList(date){
   return knex("reservations")
     .select("*")
     .where({reservation_date: date})
+    .orderBy('reservation_time')
 }
 
 function create(reservation){

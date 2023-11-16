@@ -22,7 +22,7 @@ function ReservationDisplay({selectedReservation}){
                     <p className="card-text">{selectedReservation.reservation_date}</p>
                     <p className="card-text">{selectedReservation.reservation_time}</p>
                     <button type="button" className="btn btn-danger float-right ml-2" onClick={reservationDeleteHandler}>Delete</button>
-                    <Link to={`/reservations/${selectedReservation.reservation_id}/edit`} class= "btn btn-secondary float-right">Edit</Link>
+                    <Link to={`/reservations/${selectedReservation.reservation_id}/edit`} className= "btn btn-secondary float-right">Edit</Link>
                 </div>
             </div>
         </div>

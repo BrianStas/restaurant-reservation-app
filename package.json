@@ -1,11 +1,11 @@
 {
-  "name": "starter-restaurant-reservation",
+  "name": "restaurant-reservation-capstone",
   "version": "1.0.0",
-  "description": "Starter project restaurant reservation system",
+  "description": "Restaurant Reservation Capstone for Chegg Skills",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/Thinkful-Ed/starter-restaurant-reservation"
+    "url": "https://github.com/BrianStas/restaurant-reservation-capstone"
   },
   "scripts": {
     "build": "npm -prefix front-end run build",
@@ -46,7 +46,7 @@
     "test:frontend:watch": "npm test --prefix ./front-end"
   },
   "keywords": [],
-  "author": "Thinkful, Inc.",
+  "author": "Brian Stasiukaitis",
   "license": "UNLICENSED",
   "dependencies": {
     "bootstrap": "^5.3.2"

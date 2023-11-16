@@ -1,25 +1,70 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { today } from "../utils/date-time";
 
 function ReservationForm({initialFormData, onSubmit, submitButtonText}){
     // 3 props to handle the initial form and what happens on submit
     const history = useHistory();
     const [formData, setFormData]=useState(initialFormData)
+    const [isFuture, setIsFuture] = useState(false);
+    const [isTuesday, setIsTuesday] = useState(false);
 // tracks the input as a user types to then use for submit
+    // function handleInput(event){
+    //     setFormData({
+    //         ...formData,
+    //         [event.target.name]: event.target.value
+    //     })
+    //     console.log("formData: ", formData);
+    // }
+
     function handleInput(event){
+        if(event.target.name === "people"){
+            setFormData({
+                ...formData,
+                [event.target.name]: Number(event.target.value)
+            })
+        }else{
+            setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        })
+        console.log("formData: ", formData);
+        }
+    }
+
+    function handleDate(event){
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
         })
     }
+
+    useEffect(checkIfFuture, [formData])
+    useEffect(checkTuesday, [formData])
 // sends the form data to use onSubmit from EditReservation or NewReservation then pushes user to deckScreen
-    function handleSubmit(event){
-        event.preventDefault();
-        onSubmit(formData)
-        .then(data =>
-            history.push(`/`))
-        }
+    
+function handleSubmit(event){
+    event.preventDefault();
+    if(isFuture && !isTuesday){
+    console.log("line 35 formData: ", formData);
+    onSubmit(formData)
+    .then(data =>
+        history.push(`/`))
+    }
+}
+
+function checkIfFuture(){
+    const givenDate = formData.reservation_date;
+    setIsFuture(givenDate > today());
+}
+
+    function checkTuesday(){
+        if(formData.reservation_date.length === 10){
+        const givenDate = new Date(formData.reservation_date);
+        const result = givenDate.getDay();
+        setIsTuesday(result === 1)
+        }}
 /* returns form for the following fields: 
 first name, last name, mobile number, reservation time, and reservation date.
 Will be called for the new reservation and the reservation edits.*/
@@ -68,7 +113,7 @@ Will be called for the new reservation and the reservation edits.*/
                 required />
             </div>
             <div className="form-group">
-            <label for="reservation_date">
+            <label htmlFor="reservation_date">
                 Date of Reservation
             </label>
             <input 
@@ -77,13 +122,13 @@ Will be called for the new reservation and the reservation edits.*/
                 id="reservation_date" 
                 name="reservation_date" 
                 value={formData.reservation_date} 
-                min="2023-11-01" 
-                max="2024-12-31"
-                onChange={handleInput}
+                onChange={handleDate}
                 required />
             </div>
+            {isFuture ? <></> : <p className="alert alert-danger">Please select a future date</p>}
+            {isTuesday ? <p className="alert alert-danger">Business is closed on Tuesdays</p> : <></>}
             <div className="form-group">
-            <label for="reservation_time">
+            <label htmlFor="reservation_time">
                 Reservation Time
             </label>
             <input 
@@ -98,7 +143,7 @@ Will be called for the new reservation and the reservation edits.*/
                 required />
             </div>
             <div className="form-group">
-            <label for="people">
+            <label htmlFor="people">
                 Party Size
             </label>
             <input 
@@ -106,13 +151,14 @@ Will be called for the new reservation and the reservation edits.*/
                 className="form-control"
                 id="people" 
                 name="people" 
-                min="1"
+                // min="1"
                 onChange={handleInput}
                 value={formData.people}
-                placeholder="1"
+                // placeholder="one"
                 required  />
             </div>
-            <button type="submit">{submitButtonText}</button>
+            <button type="submit" className="btn btn-primary mr-3">{submitButtonText}</button>
+            <button type="button" className="btn btn-secondary mr-3" onClick={()=>history.goBack()}>Cancel</button>
         </form>
     </div>)}
 

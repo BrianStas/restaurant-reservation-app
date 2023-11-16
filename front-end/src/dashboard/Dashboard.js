@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationDisplay from "../reservations/ReservationDisplay";
-import { next, previous } from "../utils/date-time";
+import { next, previous, today } from "../utils/date-time";
 
 /**
  * Defines the dashboard page.
@@ -39,6 +39,7 @@ function Dashboard({ date }) {
       {reservations.map((reservation) => {return <ReservationDisplay selectedReservation = {reservation} key = {reservation.reservation_id}/>})}
       </div>
       <button onClick={()=>setCurrentDate(previous(currentDate))}>Previous Day</button>
+      <button onClick={()=>setCurrentDate(today(currentDate))}>Today</button>
       <button onClick={()=>setCurrentDate(next(currentDate))}>Next Day</button>
     </main>
   );

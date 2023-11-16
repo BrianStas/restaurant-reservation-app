@@ -1,5 +1,5 @@
 import React from "react";
-import ReservationForm from "./ReservationForm";
+import ReservationForm from "./reservationForm";
 import { createReservation } from "../utils/api";
 
 function NewReservation(){
@@ -14,6 +14,7 @@ function NewReservation(){
             first_name: '',
             last_name: '',
             mobile_number: '',
+            people: 1,
             reservation_date: '',
             reservation_time: '',
             } }/>
