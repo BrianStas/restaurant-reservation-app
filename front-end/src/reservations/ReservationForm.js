@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { today } from "../utils/date-time";
 
+
+
 function ReservationForm({initialFormData, onSubmit, submitButtonText}){
     // 3 props to handle the initial form and what happens on submit
     const history = useHistory();
     const [formData, setFormData]=useState(initialFormData)
     const [isFuture, setIsFuture] = useState(false);
     const [isTuesday, setIsTuesday] = useState(false);
+    const [isFutureTime, setIsFutureTime] = useState(false);
 // tracks the input as a user types to then use for submit
 
     function handleInput(event){
@@ -34,11 +37,12 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
 
     useEffect(checkIfFuture, [formData])
     useEffect(checkTuesday, [formData])
+    useEffect(checkFutureTime, [formData])
 // sends the form data to use onSubmit from EditReservation or NewReservation then pushes user to deckScreen
     
 function handleSubmit(event){
     event.preventDefault();
-    if(isFuture && !isTuesday){
+    if(isFuture && !isTuesday && isFutureTime){
     onSubmit(formData)
     .then(data =>
         history.push(`/`))
@@ -47,7 +51,21 @@ function handleSubmit(event){
 
 function checkIfFuture(){
     const givenDate = formData.reservation_date;
-    setIsFuture(givenDate > today());
+    setIsFuture(givenDate >= today());
+}
+
+function checkFutureTime(){
+    const givenDate = formData.reservation_date;
+    const givenTime = formData.reservation_time;
+    if(givenDate === today()){
+        const timeArray = givenTime.split(":");
+        console.log("timeArray is: ", timeArray);
+        const timeNumber = Number(timeArray.join(''));
+        const currMin = new Date().getMinutes().toString();
+        const currHour = new Date().getHours().toString();
+        console.log("adding hours and mins is: ", Number(currHour + currMin));
+        setIsFutureTime(timeNumber > Number(currHour + currMin))
+    }
 }
 
     function checkTuesday(){
@@ -127,12 +145,13 @@ Will be called for the new reservation and the reservation edits.*/
                 className="form-control"
                 id="reservation_time" 
                 name="reservation_time" 
-                min="05:00" 
-                max="22:00"
+                min="10:30" 
+                max="21:30"
                 onChange={handleInput}
                 value={formData.reservation_time} 
                 required />
             </div>
+            {isFutureTime ? <></> : <p className="alert alert-danger">Please select a time in the future</p>}
             <div className="form-group">
             <label htmlFor="people">
                 Party Size

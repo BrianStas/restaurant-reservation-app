@@ -1,11 +1,23 @@
 const validator = require('validator');
 
+
 function validatorFor(property) {
+    // const removeTime = (date = new Date()) => {
+    //     return new Date(
+    //       date.getFullYear(),
+    //       date.getMonth(),
+    //       date.getDate()
+    //     );
+    //   }
     return function (req, res, next){
     if(property == "reservation_date"){
         const today = new Date();
-        const givenDate = new Date(req.body.data[property]);
-        if(givenDate < today){
+        const todayString = (today.getMonth().toString() + today.getDate().toString())
+        const givenDate = new Date(req.body.data[property]); 
+        const givenDateString = (givenDate.getMonth().toString()) + (givenDate.getDate().toString())
+        
+        console.log("given date: ", givenDateString, "Today: ", todayString);
+        if((Number(givenDateString)+1) < Number(todayString)){
             res.status(400).send({ error: 'reservation_date must be a future date'});
         }
         const dayOfGivenDate = givenDate.getDay();

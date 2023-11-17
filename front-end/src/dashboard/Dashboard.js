@@ -3,6 +3,7 @@ import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationDisplay from "../reservations/ReservationDisplay";
 import { next, previous, today } from "../utils/date-time";
+import useQuery from "../utils/useQuery";
 
 /**
  * Defines the dashboard page.
@@ -15,6 +16,9 @@ function Dashboard({ date }) {
   const [reservationsError, setReservationsError] = useState(null);
   const [currentDate, setCurrentDate] = useState(date);
   date = currentDate;
+
+  const query = useQuery();
+ const queryDate = query.get("date")
 
   useEffect(loadDashboard, [date, currentDate]);
 
