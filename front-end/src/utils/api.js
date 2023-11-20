@@ -100,3 +100,20 @@ export async function deleteReservation(reservationId) {
   const url = `${API_BASE_URL}/reservations/${reservationId}`;
   return await fetchJson(url, { method: "DELETE", headers }, {});
 }
+
+export async function listTables(signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  return await fetchJson(url, { headers, signal }, [])
+}
+
+export async function createTable(data, signal) {
+  const url = `${API_BASE_URL}/tables`;
+  console.log("createTable: ", data);
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({data}),
+    signal,
+  };
+  return await fetchJson(url, options, {});
+}

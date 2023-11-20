@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationDisplay from "../reservations/ReservationDisplay";
 import { next, previous, today } from "../utils/date-time";
 import useQuery from "../utils/useQuery";
+import TableDisplay from "../tables/TableDisplay";
 
 /**
  * Defines the dashboard page.
@@ -13,7 +14,9 @@ import useQuery from "../utils/useQuery";
  */
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
+  const [tables, setTables] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const [tablesError, setTablesError] = useState(null);
   const [currentDate, setCurrentDate] = useState(date);
   date = currentDate;
 
@@ -25,9 +28,13 @@ function Dashboard({ date }) {
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
+    setTablesError(null);
     listReservations({date}, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(setTablesError);
       console.log("currentDate variable: ", currentDate)
     return () => abortController.abort();
   }
@@ -45,6 +52,11 @@ function Dashboard({ date }) {
       <button onClick={()=>setCurrentDate(previous(currentDate))}>Previous Day</button>
       <button onClick={()=>setCurrentDate(today(currentDate))}>Today</button>
       <button onClick={()=>setCurrentDate(next(currentDate))}>Next Day</button>
+      <br/>
+      <ErrorAlert error={tablesError} />
+      <div className = "row row-cols-1 row-cols-md-3">
+        {tables.map((table) => {return <TableDisplay selectedTable={table} key = {table.table_id}/>})}
+      </div>
     </main>
   );
 }
