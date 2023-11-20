@@ -1,8 +1,17 @@
 const knex = require("../db/connection");
 
 function list(){
-    return knex("tables").select("*");
+    return knex("tables")
+    .select("*")
+    .orderBy("table_name");
 }
+
+function filteredList(){
+    return knex("tables")
+      .select("*")
+      .where({reservation_id: null})
+      .orderBy('table_name')
+  }
 
 function create(table){
     console.log("calling create service");
@@ -12,7 +21,22 @@ function create(table){
           .then((createdRecords)=> createdRecords[0]);
   }
 
+function read(tableId){
+    return knex("tables")
+    .select("*")
+    .where({ table_id: tableId }).first();
+}
+
+  function update(updatedTable){
+    return knex("tables")     
+      .select("*")
+      .where({ table_id: updatedTable.table_id})
+      .update(updatedTable, "*")
+  }
+
   module.exports = {   
     list,
+    filteredList,
     create,
+    update,
   };

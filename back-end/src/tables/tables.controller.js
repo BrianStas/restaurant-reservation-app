@@ -2,14 +2,35 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const hasProperties = require("../errors/hasProperties");
 const tablesService = require("./tables.service");
 
-async function list(req, res) {
+async function list(req, res) {    
+    const reservation = req.params.reservationId;
+    if(reservation){
+        const data = await tablesService.filteredList();
+        res.json({ data});
+    }else{
     const data = await tablesService.list();
     res.json({ data });
+        }
 }
 
 async function create(req, res) { 
     const data = await tablesService.create(req.body.data);
     res.status(201).json({ data });
+  }
+
+  function read(req, res) {
+    const { table: data } = res.locals;
+    res.json({ data });
+  
+  }
+
+  async function update(req, res) {
+    const updatedTable = {
+      ...req.body.data,
+      table_id: res.locals.table.table_id,
+    };
+    const data = await tablesService.update(updatedTable);
+    res.json({ data });
   }
 
 async function tableExists(req, res, next) {
@@ -54,4 +75,6 @@ async function tableExists(req, res, next) {
         create: [hasOnlyValidProperties, 
           hasRequiredProperties, 
           create],
+          read: [asyncErrorBoundary(tableExists), read],
+        update: [asyncErrorBoundary(tableExists), hasOnlyValidProperties, hasRequiredProperties, update],
       };
