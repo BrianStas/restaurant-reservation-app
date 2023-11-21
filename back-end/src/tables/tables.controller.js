@@ -47,6 +47,7 @@ async function tableExists(req, res, next) {
     "table_id",
     "table_name",
     "capacity",
+    "reservation_id"
   ];
   
   function hasOnlyValidProperties(req, res, next) {
@@ -77,5 +78,5 @@ async function tableExists(req, res, next) {
           hasRequiredProperties, 
           create],
           read: [asyncErrorBoundary(tableExists), read],
-        update: [asyncErrorBoundary(tableExists), update],
+        update: [asyncErrorBoundary(tableExists), hasOnlyValidProperties, update],
       };

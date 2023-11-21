@@ -29,7 +29,11 @@ function TableSelection() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      updateTable(reservationId, selectedTable);
+      console.log("selected table: ", tables[selectedTable], "reservation: ", reservation)
+      if(tables[selectedTable] && tables[selectedTable].capacity >= reservation.people){
+      updateTable(reservationId, selectedTable)
+        .then((data) => history.push("/"))
+      }
     };
 
   return (
@@ -48,12 +52,10 @@ function TableSelection() {
                   value={table.table_id}
                   onChange={handleChange} />
                 <label htmlFor={table.table_name}>{table.table_name} - {table.capacity}</label>
-              </div>)})}
-            {/* <input type="radio" id="dewey" name="drone" value="dewey" />
-            <label for="dewey">Dewey</label> */}
-          
+              </div>)})}  
+
           </div>
-          <button type="submit" className="btn btn-primary mr-3">Submit</button>
+          <button type="submit" className="btn btn-primary mr-3" >Submit</button>
           <button type="button" className="btn btn-secondary mr-3" onClick={()=>history.goBack()}>Cancel</button>
         </form>
     </div>
