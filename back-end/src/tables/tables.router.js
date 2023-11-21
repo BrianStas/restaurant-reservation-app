@@ -2,10 +2,14 @@ const methodNotAllowed = require("../errors/methodNotAllowed");
 const router = require("express").Router();
 const controller = require("./tables.controller");
 
+router
+    .route("/:tableId/seat")
+    .put(controller.update)
+    .all(methodNotAllowed);
+
 router 
     .route("/:tableId")
-    .get(controller.read)
-    .put(controller.update)
+    .get(controller.read)    
     .all(methodNotAllowed);
 
 router

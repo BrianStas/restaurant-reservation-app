@@ -11,7 +11,7 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
     const [formData, setFormData]=useState(initialFormData)
     const [isFuture, setIsFuture] = useState(false);
     const [isTuesday, setIsTuesday] = useState(false);
-    const [isFutureTime, setIsFutureTime] = useState(false);
+    const [isFutureTime, setIsFutureTime] = useState(true);
 // tracks the input as a user types to then use for submit
 
     function handleInput(event){

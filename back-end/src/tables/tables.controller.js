@@ -3,8 +3,8 @@ const hasProperties = require("../errors/hasProperties");
 const tablesService = require("./tables.service");
 
 async function list(req, res) {    
-    const reservation = req.params.reservationId;
-    if(reservation){
+    const isOpen = req.query.is_open;
+    if(isOpen){
         const data = await tablesService.filteredList();
         res.json({ data});
     }else{
@@ -26,9 +26,10 @@ async function create(req, res) {
 
   async function update(req, res) {
     const updatedTable = {
-      ...req.body.data,
-      table_id: res.locals.table.table_id,
+      ...res.locals.table,
+      reservation_id: req.body.data.reservation_id,
     };
+    console.log("made to update back end. Data is: ", req.body.data)
     const data = await tablesService.update(updatedTable);
     res.json({ data });
   }
@@ -76,5 +77,5 @@ async function tableExists(req, res, next) {
           hasRequiredProperties, 
           create],
           read: [asyncErrorBoundary(tableExists), read],
-        update: [asyncErrorBoundary(tableExists), hasOnlyValidProperties, hasRequiredProperties, update],
+        update: [asyncErrorBoundary(tableExists), update],
       };

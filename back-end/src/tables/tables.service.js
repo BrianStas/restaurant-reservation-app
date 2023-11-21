@@ -38,5 +38,6 @@ function read(tableId){
     list,
     filteredList,
     create,
+    read,
     update,
   };
