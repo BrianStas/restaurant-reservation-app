@@ -10,7 +10,7 @@ function filteredList(){
     return knex("tables")
       .select("*")
       .where({reservation_id: null})
-      .orderBy('table_name')
+      .orderBy('table_id')
   }
 
 function create(table){

@@ -12,28 +12,29 @@ function TableSelection() {
     
     function fetchReservation() {
         readReservation(reservationId).then(data => setReservation(data));
-        console.log("issue in fetch Reservation");
       }
       useEffect(fetchReservation, [reservationId])
 
     function fetchTables() {
         listOpenTables().then(data=>setTables(data));
-        console.log("issue in fetch Tables");
     }
     useEffect(fetchTables, [reservationId])
 
     const handleChange = ({ target }) => {
       setSelectedTable(target.value);
-      console.log(selectedTable);
+      // console.log(tables[selectedTable-1]);
     };
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      console.log("selected table: ", tables[selectedTable], "reservation: ", reservation)
-      if(tables[selectedTable] && tables[selectedTable].capacity >= reservation.people){
+      // const foundTable = tables.find((table)=> table.table_id == selectedTable)
+      console.log("selected table: ", "reservation: ", reservation);
+      // if(tables[selectedTable-1] && (tables[selectedTable-1].capacity >= reservation.people)){
+      //   console.log("succeeded on submit checks. Selected table is: ", selectedTable);
       updateTable(reservationId, selectedTable)
         .then((data) => history.push("/"))
-      }
+        .catch(error=> console.log("error on line 36 tableSelection"))
+      // }
     };
 
   return (

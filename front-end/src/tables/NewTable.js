@@ -12,7 +12,7 @@ function NewTable(){
             submitButtonText="Submit"
              initialFormData={ {
             table_name: '',            
-            people: 1,
+            capacity: 1,
             } }/>
     </div>
     )}
