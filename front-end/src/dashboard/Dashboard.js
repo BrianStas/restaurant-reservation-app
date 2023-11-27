@@ -18,6 +18,7 @@ function Dashboard({ date }) {
   const [reservationsError, setReservationsError] = useState(null);
   const [tablesError, setTablesError] = useState(null);
   const [currentDate, setCurrentDate] = useState(date);
+  const [reservationStatusList, setReservationStatusList] = useState()
   date = currentDate;
 
   const query = useQuery();
@@ -55,7 +56,7 @@ function Dashboard({ date }) {
       <br/>
       <ErrorAlert error={tablesError} />
       <div className = "row row-cols-1 row-cols-md-3">
-        {tables.map((table) => {return <TableDisplay selectedTable={table} key = {table.table_id}/>})}
+        {tables.map((table) => {return <TableDisplay selectedTable={table} loadDashboard = {loadDashboard} key = {table.table_id}/>})}
       </div>
     </main>
   );

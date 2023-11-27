@@ -22,7 +22,6 @@ function TableSelection() {
 
     const handleChange = ({ target }) => {
       setSelectedTable(target.value);
-      // console.log(tables[selectedTable-1]);
     };
 
     const handleSubmit = (event) => {

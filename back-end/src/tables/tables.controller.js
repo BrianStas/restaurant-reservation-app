@@ -37,6 +37,19 @@ async function create(req, res) {
     res.status(200).json({ data });    
   }
   
+  async function removeReservation(req, res) {
+    if(!res.locals.table.reservation_id){
+      return res.status(400).send({error: `${res.locals.table.table_id} is not occupied`})
+    }
+    const updatedTable = {
+      ...res.locals.table,
+      reservation_id: null,
+    };
+    console.log("made to removal back end. Data is: ", req.body.data)
+    const data = await tablesService.update(updatedTable);
+    res.status(200).json({ data });    
+  }
+  
   async function reservationExists(req, res, next) {
     console.log("reservationExists data is: ", req.body.data)
     if(!req.body.data.reservation_id){
@@ -137,4 +150,7 @@ async function tableExists(req, res, next) {
            hasOnlyValidProperties, 
            tableUpdateValidator, 
            update],
+        delete: [
+          asyncErrorBoundary(tableExists),
+          removeReservation]
       };

@@ -5,6 +5,7 @@ const controller = require("./tables.controller");
 router
     .route("/:tableId/seat")
     .put(controller.update)
+    .delete(controller.delete)
     .all(methodNotAllowed);
 
 router 

@@ -133,3 +133,13 @@ export async function updateTable(reservationId, table_id) {
   };
   return await fetchJson(url, options, {});
 }
+
+export async function removeReservation(table_id, signal) {
+  console.log("removing reservation: ", table_id)
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const options = {
+    method: "DELETE",
+    signal
+  };
+  return await fetchJson(url, options, {});
+}
