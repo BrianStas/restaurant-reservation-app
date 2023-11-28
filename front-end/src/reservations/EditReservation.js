@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import ReservationForm from "./reservationForm";
-import { readReservation, updateReservation } from "../utils/api";
+import { readReservation, updateReservationStatus } from "../utils/api";
 
 function EditReservation(){
 // pulls reservation ID from params and uses it for the reservation being edited
@@ -20,7 +20,7 @@ function EditReservation(){
         and the correct submit text with the formData filled out with the reservation info */}
         {reservation.reservation_id &&
         <ReservationForm 
-            onSubmit={updateReservation}
+            onSubmit={updateReservationStatus}
             submitButtonText="Save"
             initialFormData={reservation}/>
         }

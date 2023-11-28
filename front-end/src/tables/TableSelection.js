@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
-import { listOpenTables, readReservation, updateTable } from "../utils/api";
+import { listOpenTables, readReservation, updateReservationStatus, updateTable } from "../utils/api";
 
 function TableSelection() {
   const history = useHistory();
@@ -28,8 +28,7 @@ function TableSelection() {
       event.preventDefault();
       // const foundTable = tables.find((table)=> table.table_id == selectedTable)
       console.log("selected table: ", "reservation: ", reservation);
-      // if(tables[selectedTable-1] && (tables[selectedTable-1].capacity >= reservation.people)){
-      //   console.log("succeeded on submit checks. Selected table is: ", selectedTable);
+      updateReservationStatus(reservationId, "seated");
       updateTable(reservationId, selectedTable)
         .then((data) => history.push("/"))
         .catch(error=> console.log("error on line 36 tableSelection"))

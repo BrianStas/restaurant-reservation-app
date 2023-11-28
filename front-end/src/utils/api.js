@@ -86,12 +86,12 @@ export async function readReservation(reservationId, signal) {
 
 }
 
-export async function updateReservation(reservationId, data) {
-  const url = `${API_BASE_URL}/reservations/${reservationId}`;
+export async function updateReservationStatus(reservationId, status) {
+  const url = `${API_BASE_URL}/reservations/${reservationId}/status`;
   const options = {
     method: "PUT",
     headers,
-    body: JSON.stringify({ data }),
+    body: JSON.stringify({ data : {status} }),
   };
   return await fetchJson(url, options, {});
 }

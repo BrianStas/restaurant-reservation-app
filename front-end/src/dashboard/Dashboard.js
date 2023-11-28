@@ -18,7 +18,6 @@ function Dashboard({ date }) {
   const [reservationsError, setReservationsError] = useState(null);
   const [tablesError, setTablesError] = useState(null);
   const [currentDate, setCurrentDate] = useState(date);
-  const [reservationStatusList, setReservationStatusList] = useState()
   date = currentDate;
 
   const query = useQuery();
@@ -39,6 +38,7 @@ function Dashboard({ date }) {
       console.log("currentDate variable: ", currentDate)
     return () => abortController.abort();
   }
+
 
   return (
     <main>

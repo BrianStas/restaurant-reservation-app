@@ -29,12 +29,16 @@ function read(req, res) {
 }
 
 async function update(req, res) {
+  if(res.locals.reservation.status === "finished"){
+    return res.status(400).send({error: `${res.locals.reservation.status} reservation can not be updated`}) 
+  }
   const updatedReservation = {
     ...req.body.data,
     reservation_id: res.locals.reservation.reservation_id,
   };
-  const data = await reservationsService.update(updatedReservation);
-  res.json({ data });
+  const result = await reservationsService.update(updatedReservation);
+  const data = result[0];
+  res.status(200).json({ data });
 }
 
 async function destroy(req, res) {
@@ -60,6 +64,7 @@ const VALID_PROPERTIES = [
   "reservation_date",
   "reservation_time",
   "people",
+  "status",
 ];
 
 function hasOnlyValidProperties(req, res, next) {
@@ -80,13 +85,40 @@ function hasOnlyValidProperties(req, res, next) {
   next();
 }
 
+const hasStatusProperty = hasProperties("status");
+
 const hasRequiredProperties = hasProperties(
   "first_name", 
   "last_name", 
   "mobile_number", 
   "reservation_date", 
   "reservation_time", 
-  "people");
+  "people",
+  "status");
+  
+  const VALID_STATUS = [
+    "booked",
+    "seated",
+    "finished",
+  ]
+
+  function hasValidStatus(req, res, next){
+    if(!req.body.data)
+  {res.status(400).send({error: "data is missing!"})}
+  const {data} = req.body;
+
+  const invalidFields = Object.values(data).filter(
+    (field) => !VALID_STATUS.includes(field)
+  );
+
+  if (invalidFields.length) {
+    return next({
+      status: 400,
+      message: `Invalid status: ${invalidFields.join(", ")}`,
+    });
+  }
+  next();
+  }
 
 module.exports = {
   list: asyncErrorBoundary(list),
@@ -96,7 +128,8 @@ module.exports = {
     validatorFor("reservation_date"),
     validatorFor("reservation_time"),
     validatorFor("people"),
+    validatorFor("status"),
     create],
-  update: [asyncErrorBoundary(reservationExists), hasOnlyValidProperties, hasRequiredProperties, update],
+  update: [asyncErrorBoundary(reservationExists), hasStatusProperty, hasValidStatus, update],
   delete: [asyncErrorBoundary(reservationExists), destroy],
 };

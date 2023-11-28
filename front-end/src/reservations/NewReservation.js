@@ -17,6 +17,7 @@ function NewReservation(){
             people: 1,
             reservation_date: '',
             reservation_time: '',
+            status: "booked"
             } }/>
     </div>
     )}

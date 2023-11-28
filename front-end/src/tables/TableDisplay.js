@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { removeReservation } from '../utils/api';
+import React from 'react'
+import { removeReservation, updateReservationStatus } from '../utils/api';
 
 function TableDisplay({selectedTable, loadDashboard}){
 
     const finishHandler = ()=>{if(window.confirm("Is this table ready to seat new guests? \n This cannot be undone.")){
+        updateReservationStatus(selectedTable.reservation_id, "finished");
         removeReservation(selectedTable.table_id)
         .then(loadDashboard)
         }

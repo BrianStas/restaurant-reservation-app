@@ -51,6 +51,10 @@ function validatorFor(property) {
     if(property == "people"){
         typeof req.body.data[property] == 'number' ? next() : next({status: 400, message: 'people field must be a number'})
     }
+
+    if(property == "status"){
+        req.body.data[property] === "booked" ? next() : next({status: 400, message: `${req.body.data[property]} is not a valid POST status`})
+    }
 }
 }
 

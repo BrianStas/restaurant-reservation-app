@@ -7,12 +7,17 @@ const methodNotAllowed = require("../errors/methodNotAllowed");
 const router = require("express").Router();
 const controller = require("./reservations.controller");
 
+router
+    .route("/:reservationId/status")
+    .put(controller.update)
+    .all(methodNotAllowed)
 
 router
     .route("/:reservationId")
     .get(controller.read)
     .put(controller.update)
-    .delete(controller.delete);
+    .delete(controller.delete)
+    .all(methodNotAllowed);
 
 
 router
