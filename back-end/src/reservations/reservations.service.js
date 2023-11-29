@@ -7,7 +7,8 @@ function list(){
 function filteredList(date){
   return knex("reservations")
     .select("*")
-    .where({reservation_date: date})
+    .whereNot('status', 'finished')
+    .andWhere({reservation_date: date})
     .orderBy('reservation_time')
 }
 
@@ -26,6 +27,7 @@ function read(reservationId) {
   }
 
 function update(updatedReservation){
+  console.log("reservation update data: ", updatedReservation)
     return knex("reservations")     
       .select("*")
       .where({ reservation_id: updatedReservation.reservation_id})
@@ -36,6 +38,16 @@ function destroy(reservation_id) {
     return knex("reservations").where({ reservation_id }).del(); 
   }
 
+  function search(mobile_number) {
+    console.log("reservationsService mobile number is: ", mobile_number)
+    return knex("reservations")
+      .whereRaw(
+        "translate(mobile_number, '() -', '') like ?",
+        `%${mobile_number.replace(/\D/g, "")}%`
+      )
+      .orderBy("reservation_date");
+  }
+
   module.exports = {
     list,
     filteredList,
@@ -43,4 +55,5 @@ function destroy(reservation_id) {
     read,
     update,
     delete: destroy,
+    search,
   };

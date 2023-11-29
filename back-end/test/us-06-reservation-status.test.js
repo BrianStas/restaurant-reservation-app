@@ -212,7 +212,7 @@ describe("US-06 - Reservation status", () => {
         .put(`/tables/${tableOne.table_id}/seat`)
         .set("Accept", "application/json")
         .send({ data: { reservation_id: reservationOne.reservation_id } });
-
+        // console.log("seatResponse in test is: ", seatResponse.body);
       expect(seatResponse.body.error).toBeUndefined();
       expect(seatResponse.status).toBe(200);
 

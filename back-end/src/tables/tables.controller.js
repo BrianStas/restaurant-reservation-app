@@ -37,8 +37,10 @@ async function create(req, res) {
     };
     console.log("made to update back end. local reservation is: ", res.locals.reservation, "updated table is: ", updatedTable)
     reservationsService.update({...res.locals.reservation, status : "seated"})
-      .then(tablesService.update(updatedTable))
-      .then((data)=>res.status(200).json({ data }));
+      .then((data)=> {console.log("update reservation Data is: ", data);
+        return tablesService.update(updatedTable)})
+      .then((data)=>{console.log("update Table Data is: ", data);
+        return res.status(200).json({ data })});
   }
   
    function removeReservation(req, res) {
@@ -50,8 +52,8 @@ async function create(req, res) {
       reservation_id: null,
     };
     console.log("made to removal back end. Data is: ", req.body.data)
-    reservationsService.update({...res.locals.reservation, status : "finished"})
-     .then(tablesService.update(updatedTable))
+    reservationsService.update({reservation_id: res.locals.table.reservation_id, status : "finished"})
+     .then((data)=>tablesService.update(updatedTable))
      .then((data)=>res.status(200).json({ data }));   
   }
   
@@ -134,7 +136,7 @@ async function tableExists(req, res, next) {
           if(reservation && reservation.people > res.locals.table.capacity){
               return next({status:400, message: "capacity not large enough"});
           }
-          if(res.locals.table.reservation_id != null){
+          if(res.locals.table.reservation_id !== null){
               return next({status:400, message: "table is occupied"});
           }
           next();

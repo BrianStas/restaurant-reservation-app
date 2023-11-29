@@ -4,17 +4,26 @@ const validatorFor = require("../errors/validatorFor");
 const reservationsService = require("./reservations.service");
 
 async function list(req, res) {
-  const {date} = req.query;
+  const {date, mobile_number} = req.query;
+  console.log("req.query is: ", req.query, "date query is: ", date, "mobile_number query is: ", mobile_number)
   console.log(date);
   if(date){
     const data = await reservationsService.filteredList(date);
+    res.json({data});}
+  if(mobile_number){
+    console.log("list with mobile number")
+    const data = await reservationsService.search(mobile_number);
+    console.log("mobile number list returns: ", data)
     res.json({data});
-
-  }else{
+  }
+  else{
+    console.log("not finding queries");
   const data = await reservationsService.list();
   res.json({ data });
   }
 }
+
+
 
 async function create(req, res) {
   

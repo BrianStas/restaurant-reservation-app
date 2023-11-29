@@ -28,6 +28,7 @@ function read(tableId){
 }
 
   function update(updatedTable){
+    console.log("Knex update table with: ", updatedTable)
     return knex("tables")     
       .select("*")
       .where({ table_id: updatedTable.table_id})

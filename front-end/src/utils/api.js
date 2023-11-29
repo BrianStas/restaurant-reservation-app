@@ -143,3 +143,10 @@ export async function removeReservation(table_id, signal) {
   };
   return await fetchJson(url, options, {});
 }
+
+export async function searchReservations(input, signal){
+  console.log("searchReservations API call with input: ", input)
+  const url = new URL(`${API_BASE_URL}/reservations?mobile_number=${input}`);
+  console.log("url turn into: ", url);
+  return await fetchJson(url, {headers, signal}, [])
+}
