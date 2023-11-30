@@ -9,17 +9,17 @@ async function list(req, res) {
   console.log(date);
   if(date){
     const data = await reservationsService.filteredList(date);
-    res.json({data});}
+    return res.json({data});}
   if(mobile_number){
     console.log("list with mobile number")
     const data = await reservationsService.search(mobile_number);
     console.log("mobile number list returns: ", data)
-    res.json({data});
+    return res.json({data});
   }
   else{
     console.log("not finding queries");
   const data = await reservationsService.list();
-  res.json({ data });
+  return res.json({ data });
   }
 }
 
@@ -109,6 +109,7 @@ const hasRequiredProperties = hasProperties(
     "booked",
     "seated",
     "finished",
+    "cancelled"
   ]
 
   function hasValidStatus(req, res, next){
@@ -139,6 +140,12 @@ module.exports = {
     validatorFor("people"),
     validatorFor("status"),
     create],
-  update: [asyncErrorBoundary(reservationExists), hasStatusProperty, hasValidStatus, update],
+  update: [hasOnlyValidProperties, 
+    hasRequiredProperties, 
+    validatorFor("reservation_date"),
+    validatorFor("reservation_time"),
+    validatorFor("people"),
+    update],
+  updateStatus: [asyncErrorBoundary(reservationExists), hasStatusProperty, hasValidStatus, update],
   delete: [asyncErrorBoundary(reservationExists), destroy],
 };
