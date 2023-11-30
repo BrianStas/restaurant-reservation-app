@@ -5,6 +5,7 @@ import ReservationDisplay from "../reservations/ReservationDisplay";
 import { next, previous, today } from "../utils/date-time";
 import useQuery from "../utils/useQuery";
 import TableDisplay from "../tables/TableDisplay";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 /**
  * Defines the dashboard page.
@@ -20,8 +21,18 @@ function Dashboard({ date }) {
   const [currentDate, setCurrentDate] = useState(date);
   date = currentDate;
 
+  const history = useHistory();
+
+
   const query = useQuery();
  const queryDate = query.get("date")
+ console.log("queryDate is: ", queryDate)
+ 
+ useEffect(()=>{
+  if(queryDate){
+    setCurrentDate(queryDate)
+  }
+ }, [queryDate])
 
   useEffect(loadDashboard, [date, currentDate]);
 
@@ -36,6 +47,7 @@ function Dashboard({ date }) {
       .then(setTables)
       .catch(setTablesError);
       console.log("currentDate variable: ", currentDate)
+      
     return () => abortController.abort();
   }
 
@@ -50,9 +62,9 @@ function Dashboard({ date }) {
       <div className = "row row-cols-1 row-cols-md-3">
       {reservations.map((reservation) => {return <ReservationDisplay selectedReservation = {reservation} key = {reservation.reservation_id}/>})}
       </div>
-      <button onClick={()=>setCurrentDate(previous(currentDate))}>Previous Day</button>
-      <button onClick={()=>setCurrentDate(today(currentDate))}>Today</button>
-      <button onClick={()=>setCurrentDate(next(currentDate))}>Next Day</button>
+      <button onClick={()=>history.push(`/dashboard?date=${previous(currentDate)}`)}>Previous Day</button>
+      <button onClick={()=>history.push(`/dashboard?date=${today()}`)}>Today</button>
+      <button onClick={()=>history.push(`/dashboard?date=${next(currentDate)}`)}>Next Day</button>
       <br/>
       <ErrorAlert error={tablesError} />
       <div className = "row row-cols-1 row-cols-md-3">

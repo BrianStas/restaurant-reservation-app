@@ -74,6 +74,8 @@ const VALID_PROPERTIES = [
   "reservation_time",
   "people",
   "status",
+  "created_at",
+  "updated_at",
 ];
 
 function hasOnlyValidProperties(req, res, next) {
@@ -102,8 +104,7 @@ const hasRequiredProperties = hasProperties(
   "mobile_number", 
   "reservation_date", 
   "reservation_time", 
-  "people",
-  "status");
+  "people",);
   
   const VALID_STATUS = [
     "booked",
@@ -116,18 +117,22 @@ const hasRequiredProperties = hasProperties(
     if(!req.body.data)
   {res.status(400).send({error: "data is missing!"})}
   const {data} = req.body;
-
-  const invalidFields = Object.values(data).filter(
-    (field) => !VALID_STATUS.includes(field)
-  );
-
-  if (invalidFields.length) {
+  if(!VALID_STATUS.includes(data.status)){
     return next({
       status: 400,
-      message: `Invalid status: ${invalidFields.join(", ")}`,
+      message: `Invalid Status: ${data.status}`,
     });
   }
   next();
+  }
+
+  function addBookedStatus(req, res, next){
+    if(!req.body.data.status){
+    req.body.data = {
+      ...req.body.data,
+      status: "booked"
+    }}
+    next();
   }
 
 module.exports = {
@@ -135,16 +140,19 @@ module.exports = {
   read: [asyncErrorBoundary(reservationExists), read],
   create: [hasOnlyValidProperties, 
     hasRequiredProperties, 
+    addBookedStatus,
     validatorFor("reservation_date"),
     validatorFor("reservation_time"),
     validatorFor("people"),
     validatorFor("status"),
     create],
-  update: [hasOnlyValidProperties, 
+  update: [asyncErrorBoundary(reservationExists),
+    hasOnlyValidProperties, 
     hasRequiredProperties, 
     validatorFor("reservation_date"),
     validatorFor("reservation_time"),
     validatorFor("people"),
+    hasValidStatus,
     update],
   updateStatus: [asyncErrorBoundary(reservationExists), hasStatusProperty, hasValidStatus, update],
   delete: [asyncErrorBoundary(reservationExists), destroy],
