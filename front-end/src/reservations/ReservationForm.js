@@ -88,10 +88,7 @@ function handleSubmit(event){
           return errorList;
         }
     onSubmit(formData)
-    
-    history.push(`/dashboard?date=${formData.reservation_date}`)
-    .catch(setErrorList)
-        
+           
 }
 
 

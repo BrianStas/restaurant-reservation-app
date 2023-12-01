@@ -96,6 +96,16 @@ export async function updateReservationStatus(reservationId, status) {
   return await fetchJson(url, options, {});
 }
 
+export async function updateReservation(data) {
+  const url = `${API_BASE_URL}/reservations/${data.reservation_id}/edit`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data }),
+  };
+  return await fetchJson(url, options, {});
+}
+
 export async function deleteReservation(reservationId) {
   const url = `${API_BASE_URL}/reservations/${reservationId}`;
   return await fetchJson(url, { method: "DELETE", headers }, {});
