@@ -251,6 +251,7 @@ describe("US-06 - Reservation status", () => {
     test("does not include 'finished' reservations", async () => {
       expect(tableOne).not.toBeUndefined();
       expect(reservationOne).not.toBeUndefined();
+      console.log("reservationOne is: ", reservationOne)
 
       const seatResponse = await request(app)
         .put(`/tables/${tableOne.table_id}/seat`)
@@ -286,6 +287,7 @@ describe("US-06 - Reservation status", () => {
 });
 
 function asDateString(date) {
+  console.log("asDateString date is: ", date)
   return `${date.getFullYear().toString(10)}-${(date.getMonth() + 1)
     .toString(10)
     .padStart(2, "0")}-${date.getDate().toString(10).padStart(2, "0")}`;

@@ -15,7 +15,6 @@ function Search() {
 
     function handleSubmit(event){
         event.preventDefault();
-        console.log("searchInput is: ", searchInput)
         searchReservations(searchInput)
         .then((data)=> setSearchResults(data))
     }
@@ -26,7 +25,7 @@ function Search() {
                     <input
                         type="search" 
                         name="mobile_number"
-                        pattern="^-?[0-9]\d*\.?\d*$"
+                        // pattern="^-?[0-9]\d*\.?\d*$"
                         placeholder="Enter a customer's phone number"
                         onChange={handleChange}
                         value={searchInput} />

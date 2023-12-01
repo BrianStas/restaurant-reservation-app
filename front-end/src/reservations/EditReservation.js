@@ -3,7 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
 import ReservationForm from "./reservationForm";
-import { readReservation, updateReservationStatus } from "../utils/api";
+import { readReservation, updateReservation} from "../utils/api";
+import { formatAsDate, formatAsTime } from "../utils/date-time";
 
 function EditReservation(){
 // pulls reservation ID from params and uses it for the reservation being edited
@@ -14,11 +15,10 @@ function EditReservation(){
         readReservation(reservationId).then(data => setReservation(data));
       }
       useEffect(fetchReservation, [reservationId])
-      console.log(reservation);
 
       function submitHandler(data){
-        updateReservationStatus(data);
-        history.push(`/dashboard?date=${data.reservation_date}`)
+        updateReservation(data)
+        .then((data)=>history.push(`/dashboard?date=${data.reservation_date}`))
     }
 
     return (
@@ -28,8 +28,10 @@ function EditReservation(){
         {reservation.reservation_id &&
         <ReservationForm 
             onSubmit={submitHandler}
-            submitButtonText="Save"
-            initialFormData={reservation}/>
+            submitButtonText="Submit"
+            initialFormData={{...reservation,
+            reservation_time: formatAsTime(reservation.reservation_time),
+            reservation_date: formatAsDate(reservation.reservation_date)}}/>
         }
     </div>
     )

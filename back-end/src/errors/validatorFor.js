@@ -16,9 +16,10 @@ function validatorFor(property) {
         if (reservationDate < new Date()) {
             return res.status(400).send({ error: 'reservation_date should be in the future' })
           }
-        const givenDay = new Date(property).getUTCDay;
+        const givenDay = new Date(req.body.data[property]).getUTCDay();
+        console.log("givenDay in validator: ", givenDay);
         if(givenDay===2){
-            res.status(400).send({ error: 'reservation_date may not be a Tuesday' })
+            return res.status(400).send({ error: 'Business is closed on Tuesdays' })
             }
         
         // const today = new Date();

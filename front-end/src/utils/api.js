@@ -70,7 +70,6 @@ export async function listReservations(params, signal) {
 
 export async function createReservation(data, signal) {
   const url = `${API_BASE_URL}/reservations`;
-  console.log("createReservation: ", data);
   const options = {
     method: "POST",
     headers,
@@ -97,7 +96,7 @@ export async function updateReservationStatus(reservationId, status) {
 }
 
 export async function updateReservation(data) {
-  const url = `${API_BASE_URL}/reservations/${data.reservation_id}/edit`;
+  const url = `${API_BASE_URL}/reservations/${data.reservation_id}`;
   const options = {
     method: "PUT",
     headers,
@@ -123,7 +122,6 @@ export async function listOpenTables(signal){
 
 export async function createTable(data, signal) {
   const url = `${API_BASE_URL}/tables`;
-  console.log("createTable: ", data);
   const options = {
     method: "POST",
     headers,
@@ -135,7 +133,6 @@ export async function createTable(data, signal) {
 
 export async function updateTable(reservationId, table_id) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
-  console.log("request is sending res_id: ", reservationId, "and table_id: ", table_id)
   const options = {
     method: "PUT",
     headers,
@@ -145,7 +142,6 @@ export async function updateTable(reservationId, table_id) {
 }
 
 export async function removeReservation(table_id, signal) {
-  console.log("removing reservation: ", table_id)
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
     method: "DELETE",
@@ -155,9 +151,7 @@ export async function removeReservation(table_id, signal) {
 }
 
 export async function searchReservations(input, signal){
-  console.log("searchReservations API call with input: ", input)
   const url = new URL(`${API_BASE_URL}/reservations?mobile_number=${input}`);
-  console.log("url turn into: ", url);
   return await fetchJson(url, { headers, signal }, [])
     .then(formatReservationDate)
     .then(formatReservationTime);

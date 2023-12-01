@@ -27,7 +27,6 @@ function TableSelection() {
     const handleSubmit = (event) => {
       event.preventDefault();
       // const foundTable = tables.find((table)=> table.table_id == selectedTable)
-      console.log("selected table: ", "reservation: ", reservation);
       updateReservationStatus(reservationId, "seated");
       updateTable(reservationId, selectedTable)
         .then((data) => history.push("/"))
@@ -41,9 +40,18 @@ function TableSelection() {
           <div className="form-group">
           <label htmlFor="table_name">
               Select Table for Reservation
+              <select
+                id="table_id"
+                name="table_id"
+                onChange={handleChange}
+
+              >
+                <option value="">-- Select an Option --</option>
+                {tables.map((table)=>{return <option value={table.table_id}>{table.table_name} - {table.capacity}</option>})}
+              </select>
           </label>
           
-            {tables.map((table)=>{return(<div key={table.table_id}>
+            {/* {tables.map((table)=>{return(<div key={table.table_id}>
                 <input 
                   type="radio" 
                   id={table.table_name}  
@@ -51,7 +59,7 @@ function TableSelection() {
                   value={table.table_id}
                   onChange={handleChange} />
                 <label htmlFor={table.table_name}>{table.table_name} - {table.capacity}</label>
-              </div>)})}  
+              </div>)})}   */}
 
           </div>
           <button type="submit" className="btn btn-primary mr-3" >Submit</button>

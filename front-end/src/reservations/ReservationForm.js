@@ -1,13 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { today } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
 
 
 
 function ReservationForm({initialFormData, onSubmit, submitButtonText}){
-    // 3 props to handle the initial form and what happens on submit
+    
     const history = useHistory();
     const [formData, setFormData]=useState(initialFormData)
     const [errorList, setErrorList] = useState(null);
@@ -35,7 +34,6 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
     }
 
     function validate(reservation){
-        console.log("form validate reservation is: ", reservation)
         const errors = [];
 
         function checkIfFuture({reservation_date, reservation_time}){
@@ -46,11 +44,10 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
         }
 
         function checkTuesday({reservation_date}){
-            if(reservation_date.length === 10){
-            const givenDay = new Date(reservation_date).getUTCDay;
+            
+            const givenDay = new Date(reservation_date).getUTCDay();
             if(givenDay===2){
                 errors.push(new Error("Business is closed on Tuesdays"));
-            }
             }
         }
 
@@ -59,7 +56,6 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
             const selectedHours = formData.reservation_time.split(':')
             selectedDate.setHours(selectedHours[0], selectedHours[1], 0);
             const openingTime = new Date(selectedDate);
-            console.log("selectedDate is: ", selectedDate)
             openingTime.setHours(10, 30, 0); // Set opening Time to 10:30 AM
     
             const closingTime = new Date(selectedDate);
@@ -73,7 +69,6 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
         checkIfFuture(reservation);
         checkTuesday(reservation);
         checkWorkingHours(reservation);
-        console.log("validate errors is: ", errors)
         return errors;
     }
 // sends the form data to use onSubmit from EditReservation or NewReservation then pushes user to deckScreen
@@ -81,8 +76,7 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
 function handleSubmit(event){
 
     event.preventDefault();
-    const reservationErrors = validate(formData);  
-    console.log("handle submit reservation Errors is: ", reservationErrors)  
+    const reservationErrors = validate(formData);    
         if (reservationErrors.length) {
             setErrorList(reservationErrors);
           return errorList;
@@ -150,7 +144,6 @@ Will be called for the new reservation and the reservation edits.*/
                 className="form-control"
                 id="mobile_number"
                 name="mobile_number"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
                 onChange={handleInput}
                 value={formData.mobile_number}
                 required />
