@@ -2,7 +2,7 @@ import React from "react";
 //TODO: needs call to api to handle changes
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
-import ReservationForm from "./reservationForm";
+import ReservationForm from "./ReservationForm";
 import { readReservation, updateReservation} from "../utils/api";
 import { formatAsDate, formatAsTime } from "../utils/date-time";
 
