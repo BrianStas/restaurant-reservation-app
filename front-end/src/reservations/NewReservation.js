@@ -1,5 +1,5 @@
 import React from "react";
-import ReservationForm from "./reservationForm";
+import ReservationForm from "./ReservationForm";
 import { createReservation } from "../utils/api";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 

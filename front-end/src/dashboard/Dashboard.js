@@ -60,11 +60,12 @@ function Dashboard({ date }) {
       </div>
       <ErrorAlert error={reservationsError} />
       <div className = "row row-cols-1 row-cols-md-3">
+      <button onClick={()=>history.push(`/dashboard?date=${previous(currentDate)}`)} className="btn btn-secondary">Previous Day</button>
+      <button onClick={()=>history.push(`/dashboard?date=${today()}`)} className="btn btn-primary">Today</button>
+      <button onClick={()=>history.push(`/dashboard?date=${next(currentDate)}`)} className="btn btn-secondary">Next Day</button>
       {reservations.map((reservation) => {return <ReservationDisplay selectedReservation = {reservation} key = {reservation.reservation_id}/>})}
       </div>
-      <button onClick={()=>history.push(`/dashboard?date=${previous(currentDate)}`)}>Previous Day</button>
-      <button onClick={()=>history.push(`/dashboard?date=${today()}`)}>Today</button>
-      <button onClick={()=>history.push(`/dashboard?date=${next(currentDate)}`)}>Next Day</button>
+      
       <br/>
       <ErrorAlert error={tablesError} />
       <div className = "row row-cols-1 row-cols-md-3">
