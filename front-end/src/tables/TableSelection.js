@@ -65,16 +65,6 @@ function TableSelection() {
                 {tables.map((table)=>{return <option value={table.table_id}>{table.table_name} - {table.capacity}</option>})}
               </select>
           </label>
-          
-            {/* {tables.map((table)=>{return(<div key={table.table_id}>
-                <input 
-                  type="radio" 
-                  id={table.table_name}  
-                  name="table_id" 
-                  value={table.table_id}
-                  onChange={handleChange} />
-                <label htmlFor={table.table_name}>{table.table_name} - {table.capacity}</label>
-              </div>)})}   */}
 
           </div>
           <button type="submit" className="btn btn-primary mr-3" >Submit</button>

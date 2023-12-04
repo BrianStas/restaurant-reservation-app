@@ -22,10 +22,7 @@ function TableForm({initialFormData, onSubmit, submitButtonText}){
 
     function handleSubmit(event){
         event.preventDefault();   
-        onSubmit(formData)
-        .then(data =>
-            history.push(`/`))
-        
+        onSubmit(formData)           
     }
 
     return (

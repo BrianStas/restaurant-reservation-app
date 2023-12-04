@@ -85,22 +85,6 @@ function handleSubmit(event){
            
 }
 
-
-
-// function checkFutureTime(){
-//     const givenDate = formData.reservation_date;
-//     const givenTime = formData.reservation_time;
-//     if(givenDate === today()){
-//         const timeArray = givenTime.split(":");
-//         console.log("timeArray is: ", timeArray);
-//         const timeNumber = Number(timeArray.join(''));
-//         const currMin = new Date().getMinutes().toString();
-//         const currHour = new Date().getHours().toString();
-//         console.log("adding hours and mins is: ", Number(currHour + currMin));
-//         setIsFutureTime(timeNumber > Number(currHour + currMin))
-//     }
-// }
-
     
 /* returns form for the following fields: 
 first name, last name, mobile number, reservation time, and reservation date.

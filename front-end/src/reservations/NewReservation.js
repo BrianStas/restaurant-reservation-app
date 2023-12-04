@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ReservationForm from "./ReservationForm";
 import { createReservation } from "../utils/api";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function NewReservation(){
     const history = useHistory();
+    const [errors, setErrors]= useState(null)
+    
     function submitHandler(data){
-        createReservation(data);
-        history.push(`/dashboard?date=${data.reservation_date}`)
+        const abortController = new AbortController();
+        setErrors(null);
+        createReservation(data, abortController.signal)
+        .then((data)=> history.push(`/dashboard?date=${data.reservation_date}`))
+        .catch((error)=>setErrors(error))
+
+    return () => abortController.abort();
     }
 
     return(
     <div>
+        <ErrorAlert error={errors} />
         {/* calls the form with blank fields and then uses the createReservation API call on submit */}
         <ReservationForm 
             onSubmit={submitHandler}

@@ -13,6 +13,7 @@ function EditReservation(){
     const {reservationId} = useParams();
     const [reservation, setReservation] = useState({cards:[]})
     const [error, setError] = useState(null);
+    
     function fetchReservation() {
         setError(null);
         const abortController = new AbortController();
@@ -25,8 +26,12 @@ function EditReservation(){
       useEffect(fetchReservation, [reservationId])
 
       function submitHandler(data){
+        setError(null);
+        const abortController = new AbortController();
         updateReservation(data)
         .then((data)=>history.push(`/dashboard?date=${data.reservation_date}`))
+        .catch(setError);
+        return ()=> abortController.abort();
     }
 
     return (
