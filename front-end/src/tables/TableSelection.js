@@ -9,10 +9,17 @@ function TableSelection() {
     const [reservation, setReservation] = useState({})
     const [tables, setTables] = useState([]);
     const [selectedTable, setSelectedTable] = useState('');
+    const [error, setError] = useState(null);
     
     function fetchReservation() {
-        readReservation(reservationId).then(data => setReservation(data));
-      }
+      setError(null);
+      const abortController = new AbortController();
+      readReservation(reservationId, abortController.signal)
+      .then(data => setReservation(data))
+      .catch(setError);
+      return ()=> abortController.abort();
+    }
+
       useEffect(fetchReservation, [reservationId])
 
     function fetchTables() {
