@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom";
 import { listOpenTables, readReservation, updateReservationStatus, updateTable } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function TableSelection() {
   const history = useHistory();
@@ -9,21 +10,26 @@ function TableSelection() {
     const [reservation, setReservation] = useState({})
     const [tables, setTables] = useState([]);
     const [selectedTable, setSelectedTable] = useState('');
-    const [error, setError] = useState(null);
+    const [reservationError, setReservationError] = useState(null);
+    const [tablesError, setTablesError] = useState(null);
     
     function fetchReservation() {
-      setError(null);
+      setReservationError(null);
       const abortController = new AbortController();
       readReservation(reservationId, abortController.signal)
       .then(data => setReservation(data))
-      .catch(setError);
+      .catch(setReservationError);
       return ()=> abortController.abort();
     }
 
       useEffect(fetchReservation, [reservationId])
 
     function fetchTables() {
-        listOpenTables().then(data=>setTables(data));
+      setTablesError(null);
+      const abortController = new AbortController();
+        listOpenTables(abortController.signal)
+        .then(data=>setTables(data))
+        .catch(setTablesError);
     }
     useEffect(fetchTables, [reservationId])
 
@@ -33,7 +39,7 @@ function TableSelection() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      // const foundTable = tables.find((table)=> table.table_id == selectedTable)
+      console.log("reservation people: ", reservation.people, "table cap: ", selectedTable.capacity)
       updateReservationStatus(reservationId, "seated");
       updateTable(reservationId, selectedTable)
         .then((data) => history.push("/"))
@@ -45,6 +51,8 @@ function TableSelection() {
     <div className="w-100">  
       <form onSubmit={handleSubmit}>
           <div className="form-group">
+            <ErrorAlert error= {reservationError} />
+            <ErrorAlert error = {tablesError} />
           <label htmlFor="table_name">
               Select Table for Reservation
               <select
