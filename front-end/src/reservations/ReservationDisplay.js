@@ -12,7 +12,7 @@ function ReservationDisplay({selectedReservation, setStatus, statusArray}){
         .then((res)=> history.push('/') )
     }}
 
-    if(selectedReservation.status !== "finished" && selectedReservation.status !== "cancelled"){
+    
     return(
         <div className="col">
             <div className="card w-30">
@@ -31,9 +31,7 @@ function ReservationDisplay({selectedReservation, setStatus, statusArray}){
                 </div>
             </div>
         </div>
-        )}else{
-            return (<></>)
-        }
+        )
 }
 
 export default ReservationDisplay;

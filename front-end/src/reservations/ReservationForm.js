@@ -66,9 +66,16 @@ function ReservationForm({initialFormData, onSubmit, submitButtonText}){
             };           
         }
 
+        function checkMobileNumber({mobile_number}){
+            if (!(/^\d{10}$|^\d{3}-\d{3}-\d{4}$/.test(mobile_number))){
+                errors.push(new Error("Please input a valid mobile number"))
+            }
+        }
+
         checkIfFuture(reservation);
         checkTuesday(reservation);
         checkWorkingHours(reservation);
+        checkMobileNumber(reservation);
         return errors;
     }
 // sends the form data to use onSubmit from EditReservation or NewReservation then pushes user to deckScreen

@@ -33,7 +33,7 @@ function Search() {
                 </form>
                 
         </div>
-        <div>
+        <div className = "row row-cols-1 row-cols-md-3">
             {searchResults.length ?
         searchResults.map((reservation) => {return <ReservationDisplay selectedReservation = {reservation} key = {reservation.reservation_id}/>}) : <h5>No reservations found</h5>}
         </div>
